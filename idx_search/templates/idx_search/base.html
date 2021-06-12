@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+
+{% include 'idx_search/head.html' %}
+
+<body>
+
+    {% include 'idx_search/header.html' %}
+
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+             <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    {% block content %}
+    {% endblock content %}
+
+    {% include 'idx_search/footer.html' %}
+    {% include 'idx_search/scripts.html' %}
+
+</body>
+
+</html>

@@ -1,0 +1,54 @@
+{% extends 'idx_search/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container top-buffer">
+    <form action="{% url 'export_data' %}" method="POST">
+        {% csrf_token %}
+    <input type="hidden" name="search_string" value="{{ search_string }}">
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Export</button>
+      </div>
+    </form>
+        <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>index_string</th>
+                    <th>book_num</th>
+                    <th>book_name</th>
+                    <th>path</th>
+                    <th>page_num</th>
+                    <th>gatha_num</th>
+                </tr>
+            </thead>
+            <tbody id="tbody">
+            {% for i in items %}
+                <tr>
+                    <td>{{ i.index_string }}</td>
+                     <td>{{ i.book_num }}</td>
+                     <td>{{ i.book_name }}</td>
+                    <td>{{ i.path }}</td>
+                    <td>{{ i.page_num }}</td>
+                    <td>{{ i.gatha_num }}</td>
+
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <nav aria-label="pagination justify-content-center">
+            <ul class="pagination pagination-template d-flex justify-content-center">
+            {% if items.has_previous %}
+            <li class="page-item"><a href="?{{ page_request_var }}={{ items.previous_page_number }}&search_string={{ search_string }}" class="page-link"> <i class="fa fa-angle-left"></i></a></li>
+            {% endif %}
+            <li class="page-item"><a href="" class="page-link active">{{ items.number }}</a></li>
+            {% if items.has_next %}
+            <li class="page-item"><a href="?{{ page_request_var }}={{ items.next_page_number }}&search_string={{ search_string }}" class="page-link"> <i class="fa fa-angle-right"></i></a></li>
+            {% endif %}
+            <li>Total Number of search results {{ total_objects }}</li>
+      </ul>
+        </nav>
+    </div>
+</div>
+{% endblock content %}

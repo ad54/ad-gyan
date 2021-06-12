@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script
+  src="https://code.jquery.com/jquery-3.4.1.min.js"
+  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+  crossorigin="anonymous"></script>
+</head>
+<body>
+
+<table class="layui-table" border="1">
+    <thead>
+    <tr>
+        <th>index_string</th>
+        <th>path</th>
+        <th>gatha_num</th>
+        <th>page_num</th>
+        <th>book_num</th>
+    </tr>
+    </thead>
+    <div id="posts">
+    <tbody id="tbody">
+        {% for i in first_page %}
+              <tr>
+                  <td>{{ i.index_string }}</td>
+                  <td>{{ i.path }}</td>
+                  <td>{{ i.gatha_num }}</td>
+                  <td>{{ i.page_num }}</td>
+                  <td>{{ i.book_num }}</td>
+              </tr>
+        {% endfor %}
+    </tbody>
+    </div>
+</table>
+
+<!-- loop pagination -->
+{% for i in page_range %}
+<a style="margin-left: 5px; font-size: 20px;" href="{{i}}">{{i}}</a>
+{% endfor %}
+
+<script>
+$('a').click(function(event){
+    event.preventDefault();
+    var page_n = $(this).attr('href');
+    
+        $.ajax({
+                type: "POST",
+                url: "{% url 'idx_search' %}", // name of url
+                data : {
+                page_n : page_n, //page_number
+                csrfmiddlewaretoken: '{{ csrf_token }}',
+            },
+            success: function (resp) {
+                //loop
+                $('#posts').html('')
+               $.each(resp.results, function(i, val) {
+                 //apending posts
+                $('#tbody').append('<h2>' + val.search_string + '</h2>')
+               });
+            },
+            error: function () {}
+        }); //
+
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+{% extends 'idx_search/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container top-buffer">
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Param</th>
+                    <th>Value</th>
+                </tr>
+            </thead>
+            <tbody id="tbody">
+
+            {% for key, value in mylist %}
+                <tr>
+                    <td> {{ key }} </td>
+                    <td> {{ value }}</td>
+                </tr>
+            {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock content %}
