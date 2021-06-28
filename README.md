@@ -23,3 +23,5 @@ ___
 - Integrate strip for payment (Donation page)
 - Ajax for pagination and query
 
+Available on : https://ad-gyan.herokuapp.com/
+
